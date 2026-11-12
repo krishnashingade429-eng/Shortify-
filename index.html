@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shortify</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#101010;color:white;font-family:Arial}
+header{padding:16px;background:#181818;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:27px;font-weight:bold;color:#a5e34b}
+button{border:0;padding:12px;border-radius:10px;background:#a5e34b;color:#111;font-weight:bold}
+nav{display:flex;justify-content:space-around;padding:15px;background:#202020}
+nav a{color:white;text-decoration:none}
+main{max-width:500px;margin:auto;padding:15px}
+.story{display:flex;gap:12px;overflow:auto;padding:15px 0}
+.story div{min-width:65px;text-align:center}
+.circle{width:55px;height:55px;border-radius:50%;background:#a5e34b;margin:auto auto 6px;border:3px solid white}
+.post{background:#202020;border-radius:15px;margin:15px 0;overflow:hidden}
+.posthead{padding:12px}
+.video{height:420px;background:linear-gradient(145deg,#34205d,#111,#a5e34b);display:flex;align-items:center;justify-content:center;font-size:30px}
+.actions{padding:14px;display:flex;gap:20px}
+.actions button{background:#333;color:white}
+input{padding:12px;border-radius:8px;border:0;width:100%;margin:8px 0}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">Shortify ✦</div>
+<button onclick="upload.click()">＋ Upload</button>
+<input id="upload" type="file" accept="video/*" hidden onchange="addVideo(event)">
+</header>
+<nav>
+<a href="#">🏠 Home</a>
+<a href="#videos">🎬 Shorts</a>
+<a href="#profile">👤 Profile</a>
+</nav>
+<main>
+<h3>Welcome to Shortify ❤️</h3>
+<div class="story">
+<div><div class="circle"></div>You</div>
+<div><div class="circle"></div>Friends</div>
+<div><div class="circle"></div>Creators</div>
+</div>
+<h3>Short Videos</h3>
+<div id="videos">
+<div class="post">
+<div class="posthead">👤 Shortify Creator</div>
+<div class="video">▶ Shortify</div>
+<div class="actions">
+<button onclick="like(this)">❤️ Like 0</button>
+<button onclick="comment()">💬 Comment</button>
+<button onclick="share()">↗ Share</button>
+</div>
+</div>
+</div>
+<section id="profile">
+<h3>My Profile 👤</h3>
+<p>Welcome to your Shortify profile!</p>
+</section>
+</main>
+<script>
+function like(btn){
+let n=Number(btn.textContent.match(/\d+/)[0]);
+btn.textContent="❤️ Like "+(n+1);
+}
+function comment(){
+let c=prompt("Write your comment");
+if(c) alert("Comment: "+c);
+}
+function share(){
+if(navigator.share) navigator.share({title:"Shortify",url:location.href});
+else alert("Shortify");
+}
+function addVideo(e){
+let file=e.target.files[0];
+if(!file)return;
+let url=URL.createObjectURL(file);
+let post=document.createElement("div");
+post.className="post";
+post.innerHTML='<div class="posthead">👤 My Video</div><video controls style="width:100%;max-height:500px"></video><div class="actions"><button onclick="like(this)">❤️ Like 0</button><button onclick="comment()">💬 Comment</button><button onclick="share()">↗ Share</button></div>';
+post.querySelector("video").src=url;
+document.getElementById("videos").prepend(post);
+}
+</script>
+</body>
+                           </html>
+                           
